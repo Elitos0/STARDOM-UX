@@ -1,0 +1,8 @@
+{
+  "name": "Remix STARDOM",
+  "description": "Strict dark geometric VPN application with celestial constellation aesthetics and node routing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

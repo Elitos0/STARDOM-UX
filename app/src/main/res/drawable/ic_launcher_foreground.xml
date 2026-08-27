@@ -1,0 +1,47 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Starburst constellation rays -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#626569"
+        android:strokeWidth="1.0"
+        android:pathData="M54,24L54,84 M24,54L84,54" />
+    <!-- Fine geometric diamond ring -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#303235"
+        android:strokeWidth="1.0"
+        android:pathData="M54,28 L80,54 L54,80 L28,54 Z" />
+    <!-- Outer orbit ring -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#626569"
+        android:strokeWidth="1.0"
+        android:pathData="M54,18 m-36,0 a36,36 0 1,0 72,0 a36,36 0 1,0 -72,0" />
+    <!-- Center Square Physical Core -->
+    <path
+        android:fillColor="#070707"
+        android:strokeColor="#EEEEEC"
+        android:strokeWidth="1.0"
+        android:pathData="M44,44 L64,44 L64,64 L44,64 Z" />
+    <!-- Center Power glyph or dot -->
+    <path
+        android:fillColor="#EEEEEC"
+        android:pathData="M54,54 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <!-- Cardinal constellation ticks -->
+    <path
+        android:fillColor="#EEEEEC"
+        android:pathData="M54,24 m-1.5,0 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0" />
+    <path
+        android:fillColor="#EEEEEC"
+        android:pathData="M54,84 m-1.5,0 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0" />
+    <path
+        android:fillColor="#EEEEEC"
+        android:pathData="M24,54 m-1.5,0 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0" />
+    <path
+        android:fillColor="#EEEEEC"
+        android:pathData="M84,54 m-1.5,0 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0" />
+</vector>

@@ -73,62 +73,73 @@ fun MainVpnScreen(
     /*
      * MAIN UI WITH ADAPTIVE VERTICAL CONTROL
      */
-    BoxWithConstraints(
+    Column(
       modifier = Modifier
         .fillMaxSize()
         .windowInsetsPadding(WindowInsets.safeDrawing)
-        .padding(horizontal = StardomDimensions.ScreenHorizontal)
+        .padding(
+          horizontal = StardomDimensions.ScreenHorizontal
+        ),
+      horizontalAlignment = Alignment.CenterHorizontally
     ) {
-      val availableHeight = maxHeight
 
-      Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-      ) {
-        StardomHeader(
-          connected = vpnState.isConnected,
-          language = selectedLanguage,
-          onProfileClick = { showAccountDialog = true },
-          onSettingsClick = { showSettingsSheet = true }
-        )
+      StardomHeader(
+        connected = vpnState.isConnected,
+        language = selectedLanguage,
+        onProfileClick = { showAccountDialog = true },
+        onSettingsClick = { showSettingsSheet = true }
+      )
 
-        // Measured top vertical spacing between Header and Orbit Control
-        val topSpacerWeight = if (availableHeight > 800.dp) 0.08f else 0.04f
-        Spacer(Modifier.weight(topSpacerWeight))
+      /*
+       * Вся дополнительная высота высокого телефона
+       * поглощается только здесь.
+       */
+      Spacer(
+        modifier = Modifier.weight(1f)
+      )
 
-        StardomOrbitControl(
-          vpnState = vpnState,
-          onClick = { viewModel.toggleConnection() },
-          language = selectedLanguage,
-          modifier = Modifier.fillMaxWidth(0.92f)
-        )
+      StardomOrbitControl(
+        vpnState = vpnState,
+        onClick = { viewModel.toggleConnection() },
+        language = selectedLanguage,
+        modifier = Modifier.fillMaxWidth()
+      )
 
-        Spacer(Modifier.height(10.dp))
+      Spacer(
+        Modifier.height(6.dp)
+      )
 
-        StardomStatus(
-          vpnState = vpnState,
-          language = selectedLanguage
-        )
+      StardomStatus(
+        vpnState = vpnState,
+        language = selectedLanguage
+      )
 
-        // Measured bottom vertical spacing between Status and Routing Panel
-        val bottomSpacerWeight = if (availableHeight > 800.dp) 0.10f else 0.05f
-        Spacer(Modifier.weight(bottomSpacerWeight))
+      Spacer(
+        Modifier.height(20.dp)
+      )
 
-        StardomRoutingPanel(
-          connectionMode = connectionMode,
-          activeServer = activeServer,
-          onRoutingModeChange = { mode ->
-            viewModel.setConnectionMode(mode)
-            if (mode == ConnectionMode.MANUAL) {
-              showServerSheet = true
-            }
-          },
-          onNodeClick = { showServerSheet = true },
-          language = selectedLanguage
-        )
+      StardomRoutingPanel(
+        connectionMode = connectionMode,
+        activeServer = activeServer,
 
-        Spacer(Modifier.height(12.dp))
-      }
+        onRoutingModeChange = { mode ->
+          viewModel.setConnectionMode(mode)
+
+          if (mode == ConnectionMode.MANUAL) {
+            showServerSheet = true
+          }
+        },
+
+        onNodeClick = {
+          showServerSheet = true
+        },
+
+        language = selectedLanguage
+      )
+
+      Spacer(
+        Modifier.height(12.dp)
+      )
     }
 
     /*

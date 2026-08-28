@@ -87,9 +87,9 @@ fun StardomOrbitControl(
       modifier = Modifier.fillMaxSize()
     ) {
       val center = center
-      val outerRadius = size.minDimension * 0.39f
-      val secondaryRadius = size.minDimension * 0.31f
-      val diamondRadius = size.minDimension * 0.26f
+      val outerRadius = size.minDimension * 0.43f
+      val secondaryRadius = size.minDimension * 0.35f
+      val diamondRadius = size.minDimension * 0.36f
 
       /*
        * OUTER ORBIT (pure 1px stroke)

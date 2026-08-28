@@ -65,7 +65,7 @@ fun StardomRoutingPanel(
       letterSpacing = 2.sp
     )
 
-    Spacer(Modifier.height(11.dp))
+    Spacer(Modifier.height(8.dp))
 
     /*
      * AUTO / MANUAL SELECTORS (50 / 50)
@@ -98,7 +98,7 @@ fun StardomRoutingPanel(
       )
     }
 
-    Spacer(Modifier.height(13.dp))
+    Spacer(Modifier.height(10.dp))
 
     /*
      * HAIRLINE DIVIDER (1px)
@@ -184,7 +184,7 @@ fun StardomRoutingPanel(
 
       Box(
         modifier = Modifier
-          .size(40.dp)
+          .size(36.dp)
           .border(
             width = 1.dp,
             color = StardomColors.Border
@@ -213,7 +213,7 @@ private fun RoutingModeCell(
 ) {
   Row(
     modifier = modifier
-      .height(56.dp)
+      .height(48.dp)
       .background(
         if (selected) StardomColors.PanelSelected else StardomColors.Panel
       )

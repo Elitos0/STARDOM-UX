@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-08-28T08:47:30.974120Z">
+        <DropdownSelection timestamp="2026-08-28T23:59:40.271216Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=/Users/enigmas/.android/avd/stardom-api35.avd" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=JFKFMFJFNBC6KJYX" />
             </handle>
           </Target>
         </DropdownSelection>

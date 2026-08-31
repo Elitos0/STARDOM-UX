@@ -31,6 +31,7 @@ import com.example.ui.theme.IbmPlexMono
 import com.example.ui.theme.SpaceGrotesk
 import com.example.ui.theme.StardomColors
 import com.example.ui.theme.StardomDimensions
+import androidx.compose.foundation.layout.fillMaxHeight
 
 @Composable
 fun StardomRoutingPanel(
@@ -70,12 +71,37 @@ fun StardomRoutingPanel(
     /*
      * AUTO / MANUAL SELECTORS (50 / 50)
      */
+    /*
+     * AUTO / MANUAL — единый общий контейнер.
+     *
+     * Было:
+     * [ AUTO ]   [ MANUAL ]
+     *
+     * Стало:
+     * [ AUTO | MANUAL ]
+     */
     Row(
-      modifier = Modifier.fillMaxWidth()
+      modifier = Modifier
+        .fillMaxWidth()
+
+        // ВЫСОТА всей общей плашки AUTO / MANUAL.
+        // ↑ увеличить -> плашка станет выше.
+        // ↓ уменьшить -> компактнее.
+        .height(60.dp)
+
+        // ОБЩАЯ внешняя рамка сразу вокруг AUTO + MANUAL.
+        .border(
+          width = 1.dp,
+          color = StardomColors.BorderStrong
+        )
     ) {
+
       RoutingModeCell(
         title = "AUTO",
-        subtitle = if (language == AppLanguage.RU) "НИЗКИЙ ПИНГ" else "LOWEST LATENCY",
+        subtitle = if (language == AppLanguage.RU)
+          "НИЗКИЙ ПИНГ"
+        else
+          "LOWEST LATENCY",
         selected = connectionMode == ConnectionMode.AUTO,
         testTag = "mode_tab_auto",
         modifier = Modifier.weight(1f),
@@ -84,11 +110,24 @@ fun StardomRoutingPanel(
         }
       )
 
-      Spacer(Modifier.width(8.dp))
+      /*
+       * ЦЕНТРАЛЬНЫЙ РАЗДЕЛИТЕЛЬ AUTO | MANUAL
+       *
+       * width = толщина линии.
+       */
+      Box(
+        modifier = Modifier
+          .fillMaxHeight()
+          .width(1.dp)
+          .background(StardomColors.Border)
+      )
 
       RoutingModeCell(
         title = "MANUAL",
-        subtitle = if (language == AppLanguage.RU) "ВЫБОР УЗЛА" else "SELECT NODE",
+        subtitle = if (language == AppLanguage.RU)
+          "ВЫБОР УЗЛА"
+        else
+          "SELECT NODE",
         selected = connectionMode == ConnectionMode.MANUAL,
         testTag = "mode_tab_manual",
         modifier = Modifier.weight(1f),
@@ -139,6 +178,15 @@ fun StardomRoutingPanel(
 
     Spacer(Modifier.height(8.dp))
 
+    Box(
+      modifier = Modifier
+        .fillMaxWidth()
+        .height(1.dp)
+        .background(StardomColors.Border)
+    )
+
+    Spacer(Modifier.height(9.dp))
+
     /*
      * ACTIVE NODE MAIN ROW & DROPDOWN
      */
@@ -166,21 +214,23 @@ fun StardomRoutingPanel(
           fontFamily = SpaceGrotesk,
           fontWeight = FontWeight.Medium,
           fontSize = 16.sp,
+          lineHeight = 18.sp,
           letterSpacing = 1.2.sp
         )
 
-        Spacer(Modifier.height(6.dp))
+        Spacer(Modifier.height(3.dp))
 
         Text(
           text = "${activeServer.city.uppercase()} / ${activeServer.countryCode} • ${activeServer.constellation}",
           color = StardomColors.TextSecondary,
           fontFamily = IbmPlexMono,
           fontSize = 9.sp,
+          lineHeight = 10.sp,
           letterSpacing = 1.2.sp
         )
       }
 
-      Spacer(Modifier.width(10.dp))
+      Spacer(Modifier.width(8.dp))
 
       Box(
         modifier = Modifier
@@ -211,63 +261,206 @@ private fun RoutingModeCell(
   onClick: () -> Unit,
   modifier: Modifier = Modifier
 ) {
+
   Row(
     modifier = modifier
-      .height(48.dp)
+      .fillMaxHeight()
+
+      /*
+       * Не ставим здесь border().
+       *
+       * Общая рамка теперь находится снаружи сразу
+       * вокруг AUTO + MANUAL.
+       */
+
+      /*
+       * Очень слабое выделение выбранной половины.
+       *
+       * Если вообще не хочешь различия по фону,
+       * замени всё на:
+       *
+       * .background(StardomColors.Panel)
+       */
       .background(
-        if (selected) StardomColors.PanelSelected else StardomColors.Panel
+        if (selected)
+          StardomColors.PanelSelected
+        else
+          StardomColors.Panel
       )
-      .border(
-        width = 1.dp,
-        color = if (selected) StardomColors.BorderStrong else StardomColors.BorderFaint
-      )
+
       .testTag(testTag)
+
       .clickable {
         onClick()
       }
-      .padding(horizontal = 12.dp),
+
+      /*
+       * ОТСТУП ОТ ЛЕВОГО КРАЯ ПЛАШКИ ДО КВАДРАТИКА.
+       *
+       * Раньше было: 12.dp
+       * Сейчас:      24.dp
+       *
+       * Хочешь квадратик ближе к краю -> уменьшай.
+       * Хочешь дальше от края -> увеличивай.
+       */
+      .padding(
+        start = 20.dp,
+        end = 10.dp
+      ),
+
     verticalAlignment = Alignment.CenterVertically
   ) {
+
     /*
-     * SQUARE INDICATOR
+     * ВНЕШНИЙ КВАДРАТ — индикатор выбора.
      */
     Box(
       modifier = Modifier
-        .size(12.dp)
+
+        /*
+         * РАЗМЕР внешнего квадрата.
+         *
+         * Было: 12.dp
+         * Стало: 24.dp
+         *
+         * 20.dp — немного аккуратнее.
+         * 24.dp — ровно примерно ×2.
+         */
+        .size(24.dp)
+
+        /*
+         * Толщина рамки большого квадрата.
+         *
+         * Сейчас 1.dp.
+         * Если хочется чуть массивнее -> 1.5.dp.
+         */
         .border(
           width = 1.dp,
-          color = if (selected) StardomColors.Selected else StardomColors.TextMuted
+          color = if (selected)
+            StardomColors.Selected
+          else
+            StardomColors.TextMuted
         ),
+
       contentAlignment = Alignment.Center
     ) {
+
       if (selected) {
+
+        /*
+         * ВНУТРЕННИЙ заполненный квадратик.
+         *
+         * Было:
+         *
+         * outer = 12.dp
+         * inner = 4.dp
+         *
+         * Свободное пространство:
+         * (12 - 4) / 2 = 4.dp с каждой стороны.
+         *
+         *
+         * Сейчас:
+         *
+         * outer = 24.dp
+         * inner = 8.dp
+         *
+         * Свободное пространство:
+         * (24 - 8) / 2 = 8.dp.
+         *
+         * То есть внутренний "воздух" увеличился
+         * ровно примерно в 2 раза.
+         */
         Box(
           modifier = Modifier
-            .size(4.dp)
-            .background(StardomColors.Selected)
+            .size(16.dp)
+            .background(
+              StardomColors.Selected
+            )
         )
       }
     }
 
-    Spacer(Modifier.width(10.dp))
 
-    Column {
+    /*
+     * РАССТОЯНИЕ МЕЖДУ КВАДРАТОМ И ТЕКСТОМ.
+     *
+     * Это НЕ отступ от левого края.
+     *
+     * 8.dp  -> текст ближе к квадрату.
+     * 12.dp -> больше воздуха.
+     * 16.dp -> уже довольно широко.
+     */
+    Spacer(
+      Modifier.width(15.dp)
+    )
+
+
+    /*
+     * AUTO
+     * LOWEST LATENCY
+     */
+    Column(
+      verticalArrangement = Arrangement.spacedBy(
+
+        /*
+         * ВЕРТИКАЛЬНОЕ расстояние:
+         *
+         * AUTO
+         * ↓
+         * LOWEST LATENCY
+         *
+         * 0.dp -> практически вплотную.
+         * 2.dp -> хороший плотный вариант.
+         * 4.dp+ -> заметно разъезжается.
+         */
+        2.dp
+      )
+    ) {
+
       Text(
         text = title,
-        color = if (selected) StardomColors.TextPrimary else StardomColors.TextSecondary,
+
+        color = if (selected)
+          StardomColors.TextPrimary
+        else
+          StardomColors.TextSecondary,
+
         fontFamily = SpaceGrotesk,
         fontWeight = FontWeight.Medium,
+
+        /*
+         * Размер AUTO / MANUAL.
+         */
         fontSize = 13.sp,
+
+        /*
+         * Высота строки AUTO / MANUAL.
+         *
+         * Если визуально слишком много воздуха
+         * над/под буквами — уменьшать именно это.
+         */
+        lineHeight = 14.sp,
+
         letterSpacing = 1.2.sp
       )
 
-      Spacer(Modifier.height(3.dp))
-
       Text(
         text = subtitle,
+
         color = StardomColors.TextSecondary,
+
         fontFamily = IbmPlexMono,
+
+        /*
+         * Размер LOWEST LATENCY / SELECT NODE.
+         */
         fontSize = 8.sp,
+
+        /*
+         * Высота второй строки.
+         */
+        lineHeight = 9.sp,
+
         letterSpacing = 1.sp
       )
     }

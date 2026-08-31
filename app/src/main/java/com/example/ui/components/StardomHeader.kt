@@ -76,8 +76,8 @@ fun StardomHeader(
           color = StardomColors.TextPrimary,
           fontFamily = SpaceGrotesk,
           fontWeight = FontWeight.Medium,
-          fontSize = 17.sp,
-          letterSpacing = 2.5.sp
+          fontSize = 20.sp,
+          letterSpacing = .2.sp
         )
 
         Spacer(Modifier.width(8.dp))
